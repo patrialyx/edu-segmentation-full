@@ -10,15 +10,6 @@ First, create an API key in Yelp Fusion. Go to https://fusion.yelp.com/. Click o
 Create a .env file in the root of your project and add your API key like this:
 `YELP_API_KEY=your_yelp_api_key_here`
 
-## Installation
-
-1. Clone this repository to your local machine:
-`git clone https://github.com/yourusername/yelp-api-express.git`
-2. Navigate to the project directory:
-`cd yelp-api-express`
-3. Install the required dependencies:
-`npm install`
-
 ## Usage
 1. Rename the .env.example file to .env and replace YOUR_YELP_API_KEY with your actual Yelp API key.
 2. Start the Express server:`node yelp_server.js`
