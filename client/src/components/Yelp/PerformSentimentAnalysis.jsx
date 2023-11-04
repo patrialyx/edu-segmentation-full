@@ -13,7 +13,9 @@ export const analyzeSentiment = async (name, inputText) => {
     return {};
   }
 };
-export const performSentimentAnalysis = async (name, reviews, myMap) => {
+
+
+export const getHighlight = async (name, reviews, myMap) => {
   try {
     await Promise.all(
       reviews.map(async (review) => {
@@ -23,6 +25,27 @@ export const performSentimentAnalysis = async (name, reviews, myMap) => {
             review.text
           );
           const labels = aspectAnalyzedReview.labels;
+        
+        }
+      })
+    );
+    return myMap;
+  } catch (error) {
+    console.error("ERROR: performSentimentAnalysis:", name, error);
+  }
+};
+
+export const performSentimentAnalysis = async (name, reviews, myMap, highlightMap) => {
+  try {
+    await Promise.all(
+      reviews.map(async (review) => {
+        if (review) {
+          const aspectAnalyzedReview = await analyzeSentiment(
+            name,
+            review.text
+          );
+          const labels = aspectAnalyzedReview.labels;
+          highlightMap[review.text] = labels;
           for (const label in labels) {
             const sentiment = labels[label];
             if (!myMap[label]) {
@@ -39,7 +62,8 @@ export const performSentimentAnalysis = async (name, reviews, myMap) => {
         }
       })
     );
-    return myMap;
+    console.log("labels notation", myMap)
+    return [myMap, highlightMap];
   } catch (error) {
     console.error("ERROR: performSentimentAnalysis:", name, error);
   }

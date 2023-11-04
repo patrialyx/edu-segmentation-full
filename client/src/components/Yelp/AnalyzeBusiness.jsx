@@ -1,13 +1,15 @@
 // analyzeBusinesses.js
-import { performSentimentAnalysis } from "./PerformSentimentAnalysis";
+import { performSentimentAnalysis, analyzeSentiment} from "./PerformSentimentAnalysis";
 
 export const analyzeBusiness = async (business) => {
   const myMap = {};
-  
-  const analyzedReviews = await performSentimentAnalysis(
+  const highlightMap = {};
+
+  const [analyzedReviews, highlights] = await performSentimentAnalysis(
     business.name,
     business.reviews,
-    myMap
+    myMap,
+    highlightMap
   );
   
   for (const field in analyzedReviews) {
@@ -17,5 +19,5 @@ export const analyzeBusiness = async (business) => {
     analyzedReviews[field]["neutral"] = (neutral / total) * 100;
   }
 
-  return { ...business, analyzedReviews };
+  return { ...business, analyzedReviews, highlights};
 };

@@ -28,9 +28,10 @@ const Yelp = () => {
     setIsload(true);
     setIsSearch(true);
     try {
+      setBusinesses([]);
       const mergedBusinesses = await searchBusinesses(location, businessName);
       const analyzedBusinessesPromises = await Promise.all(
-        mergedBusinesses.map(async (business) => {
+        mergedBusinesses.slice(0,1).map(async (business) => {
           return await analyzeBusiness(business); // Use the new analyzeBusiness function
         })
       );
